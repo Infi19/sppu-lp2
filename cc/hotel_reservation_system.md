@@ -1,192 +1,176 @@
-# Creating a Simple Hotel Reservation System in Salesforce Classic
+# 🏨 Hotel Reservation System using Salesforce Classic
 
-This guide will walk you through the steps to create a basic hotel reservation system in Salesforce Classic without using Visualforce Pages or Apex classes. We'll focus on creating custom objects and tabs for Rooms, Customers, and Reservations.
+This project demonstrates how to create a **Hotel Reservation System** application in **Salesforce Classic** using custom objects, fields, and relationships.
 
-## Prerequisites
+---
 
-- Salesforce Developer Account or Sandbox environment
-- Administrator access to the Salesforce org
+## 🎯 Objective
 
-## Step 1: Create Custom Objects
+Build a custom application in **Salesforce Classic** to manage hotel room reservations. This includes managing rooms, customers, and reservation records using custom objects, fields, and lookup relationships.
 
-First, we'll create three custom objects to store our data:
+---
 
-### 1.1 Create Room Object
+## 🔧 Prerequisites
 
-1. Navigate to **Setup** > **Create** > **Objects** > **Create New Custom Object**
-2. Fill in the following details:
-   - **Label**: Room
-   - **Plural Label**: Rooms
-   - **Object Name**: Room
-   - **Description**: Stores information about hotel rooms
-   - Check **Allow Reports** and **Allow Activities**
-   - **Record Name**: Room Number
-   - **Data Type**: Text
-   - **Save**
+- Salesforce Classic is enabled in your Salesforce org.
+- Admin access to create objects, fields, and tabs.
 
-3. Add custom fields:
-   - **Room Type** (Picklist): Standard, Deluxe, Suite
-   - **Floor** (Number)
-   - **Rate Per Night** (Currency)
-   - **Status** (Picklist): Available, Occupied, Maintenance
-   - **Description** (Text Area)
-   - **Amenities** (Multi-select Picklist): WiFi, TV, Mini Bar, Ocean View, etc.
+---
 
-### 1.2 Create Customer Object
+## 🚀 Step-by-Step Instructions
 
-1. Navigate to **Setup** > **Create** > **Objects** > **Create New Custom Object**
-2. Fill in the following details:
-   - **Label**: Customer
-   - **Plural Label**: Customers
-   - **Object Name**: Customer
-   - **Description**: Stores information about hotel customers
-   - Check **Allow Reports** and **Allow Activities**
-   - **Record Name**: Customer Name
-   - **Data Type**: Text
-   - **Save**
+### 📁 1. Create a New Custom App
+1. Go to **Setup** (Click on your name > Setup).
+2. Navigate to **Build > Create > Apps**.
+3. Click **New** under "Custom Apps".
+4. Select **Custom App**, click **Next**.
+5. App Label: `Hotel Reservation System`
+6. App Name: `Hotel_Reservation_System`
+7. Add a custom logo if desired.
+8. Choose tabs to include initially (we'll add the ones we create later).
+9. Assign profiles that can access the app.
+10. Click **Save**.
 
-3. Add custom fields:
-   - **Email** (Email)
-   - **Phone** (Phone)
-   - **Address** (Text Area)
-   - **ID Type** (Picklist): Passport, Driver's License, National ID
-   - **ID Number** (Text)
-   - **Loyalty Status** (Picklist): Regular, Silver, Gold, Platinum
+---
 
-### 1.3 Create Reservation Object
+## 🏨 Room Management
 
-1. Navigate to **Setup** > **Create** > **Objects** > **Create New Custom Object**
-2. Fill in the following details:
-   - **Label**: Reservation
-   - **Plural Label**: Reservations
-   - **Object Name**: Reservation
-   - **Description**: Stores information about hotel reservations
-   - Check **Allow Reports** and **Allow Activities**
-   - **Record Name**: Reservation Number
-   - **Data Type**: Auto Number
-   - **Display Format**: R-{0000}
-   - **Starting Number**: 1
-   - **Save**
+### 🧱 2. Create the Room Object
+1. Go to **Build > Create > Objects**.
+2. Click **New Custom Object**.
+3. Label: `Room`
+4. Object Name: `Room`
+5. Plural Label: `Rooms`
+6. Check **"Launch New Custom Tab Wizard"** after saving.
+7. Save.
 
-3. Add custom fields:
-   - **Check-in Date** (Date)
-   - **Check-out Date** (Date)
-   - **Number of Guests** (Number)
-   - **Status** (Picklist): Confirmed, Checked-in, Checked-out, Cancelled
-   - **Total Amount** (Currency)
-   - **Payment Status** (Picklist): Pending, Partial, Paid
-   - **Special Requests** (Text Area)
+### 3️⃣ Create Custom Fields for Room
+Navigate to the Room object and click **"New"** under **Custom Fields & Relationships**:
 
-## Step 2: Create Relationships Between Objects
+- **Type**
+  - Data Type: Picklist
+  - Values: Single, Double, Suite
+  - Required: Yes
 
-Now we'll create relationships between our objects:
+- **Price**
+  - Data Type: Currency
+  - Decimal Places: 2
+  - Required: Yes
 
-### 2.1 Create Lookup Relationships on Reservation Object
+- **Available**
+  - Data Type: Checkbox
+  - Default Value: Checked (True)
 
-1. Navigate to **Setup** > **Create** > **Objects** > **Reservation**
-2. Add two lookup relationship fields:
-   - **Room** (Lookup Relationship to Room object)
-   - **Customer** (Lookup Relationship to Customer object)
+### 🗂️ 4. Create Tab for Room
+1. After object creation, the **Tab Wizard** should open.
+2. Tab Style: Choose an icon (e.g., Key or Hotel).
+3. Click **Next**, assign to profiles, and **Save**.
 
-## Step 3: Create Custom Tabs
+---
 
-Create tabs for each of our custom objects:
+## 👤 Customer Management
 
-1. Navigate to **Setup** > **Create** > **Tabs**
-2. Click **New** in the Custom Object Tabs section
-3. Create tabs for each object:
-   - Select **Room** object, choose an icon, and save
-   - Select **Customer** object, choose an icon, and save
-   - Select **Reservation** object, choose an icon, and save
+### 🧱 5. Create the Customer Object
+1. Go to **Create > Objects** > **New Custom Object**.
+2. Label: `Customer`
+3. Object Name: `Customer`
+4. Plural Label: `Customers`
+5. Save and launch the **New Custom Tab Wizard**.
 
-## Step 4: Create List Views
+### 6️⃣ Create Custom Fields for Customer
+- **Phone**
+  - Data Type: Phone
+  - Required: Yes
 
-Create useful list views for each tab:
+- **Email**
+  - Data Type: Email
+  - Required: Yes
 
-### 4.1 Room List Views
+### 🗂️ 7. Create Tab for Customer
+Use the **Tab Wizard** to create a tab for Customer.
+- Choose an appropriate icon (e.g., Person).
+- Save.
 
-1. Navigate to the **Rooms** tab
-2. Click **Create New View**
-3. Create the following views:
-   - **All Rooms**: All rooms in the hotel
-   - **Available Rooms**: Filter where Status = Available
-   - **Occupied Rooms**: Filter where Status = Occupied
-   - **Maintenance Rooms**: Filter where Status = Maintenance
+---
 
-### 4.2 Customer List Views
+## 📅 Reservation Management
 
-1. Navigate to the **Customers** tab
-2. Click **Create New View**
-3. Create the following views:
-   - **All Customers**: All customers
-   - **VIP Customers**: Filter where Loyalty Status = Gold OR Platinum
+### 🧱 8. Create the Reservation Object
+1. Go to **Create > Objects** > **New Custom Object**.
+2. Label: `Reservation`
+3. Object Name: `Reservation`
+4. Plural Label: `Reservations`
+5. Save and launch the **Tab Wizard**.
 
-### 4.3 Reservation List Views
+### 9️⃣ Create Custom Fields for Reservation
+- **Check-in**
+  - Data Type: Date
 
-1. Navigate to the **Reservations** tab
-2. Click **Create New View**
-3. Create the following views:
-   - **All Reservations**: All reservations
-   - **Today's Check-ins**: Filter where Check-in Date = TODAY
-   - **Today's Check-outs**: Filter where Check-out Date = TODAY
-   - **Active Reservations**: Filter where Status = Confirmed OR Checked-in
+- **Check-out**
+  - Data Type: Date
 
-## Step 5: Create a Custom App
+- **Lookup to Room**
+  - Data Type: Lookup Relationship
+  - Related To: `Room`
 
-Create a custom app to group all our tabs:
+- **Lookup to Customer**
+  - Data Type: Lookup Relationship
+  - Related To: `Customer`
 
-1. Navigate to **Setup** > **Create** > **Apps**
-2. Click **New**
-3. Fill in the following details:
-   - **App Label**: Hotel Management
-   - **Description**: Simple hotel reservation system
-   - **Logo**: Upload a hotel logo (optional)
-   - Select the tabs: Home, Rooms, Customers, Reservations, Reports
-   - **Save**
+> These relationships help you associate each reservation with one customer and one room.
 
-## Step 6: Set Up Page Layouts
+### 🗂️ 10. Create Tab for Reservation
+Use the **Tab Wizard** to create a tab for Reservation.
+- Icon: Choose something like a Calendar or Document.
+- Save.
 
-Customize page layouts for better user experience:
+---
 
-1. Navigate to **Setup** > **Create** > **Objects** > select each object
-2. Click on **Page Layouts** > **Edit** next to the default layout
-3. Arrange fields in logical sections:
-   - For Rooms: Room Details, Amenities, System Information
-   - For Customers: Customer Details, Contact Information, System Information
-   - For Reservations: Reservation Details, Room & Customer, Payment Information, System Information
-4. Add related lists to show connections between objects:
-   - On Room layout: Add Reservations related list
-   - On Customer layout: Add Reservations related list
+## 🔄 Summary of Objects and Fields
 
-## Step 7: Create Reports and Dashboard
+### Object: **Room**
+| Field Name | Type       |
+|------------|------------|
+| Name       | Auto       |
+| Type       | Picklist   |
+| Price      | Currency   |
+| Available  | Checkbox   |
 
-Create reports to analyze your hotel data:
+### Object: **Customer**
+| Field Name | Type    |
+|------------|---------|
+| Name       | Auto    |
+| Phone      | Phone   |
+| Email      | Email   |
 
-1. Navigate to the **Reports** tab
-2. Create the following reports:
-   - **Room Occupancy**: Summary report of rooms grouped by status
-   - **Reservations by Date**: Matrix report of reservations by check-in date
-   - **Revenue Report**: Summary report of reservations grouped by month showing sum of Total Amount
-   - **Customer Loyalty Report**: Summary report of customers grouped by loyalty status
+### Object: **Reservation**
+| Field Name | Type              |
+|------------|-------------------|
+| Name       | Auto              |
+| Check-in   | Date              |
+| Check-out  | Date              |
+| Room       | Lookup(Room)      |
+| Customer   | Lookup(Customer)  |
 
-3. Create a dashboard with these reports for a quick overview of hotel operations
+---
 
-## Step 8: Test the System
+## ✅ Final Output
 
-Test your hotel reservation system with the following workflow:
+Once completed, your **Hotel Reservation System** in **Salesforce Classic** will allow you to:
+- Track room availability and pricing.
+- Store customer contact details.
+- Record reservations with check-in and check-out dates.
+- Use custom tabs to easily access data.
 
-1. Create sample Room records
-2. Create sample Customer records
-3. Create Reservation records linking Rooms and Customers
-4. Test the list views and reports
+---
 
-## Conclusion
+## 🧪 Bonus: Test Your Application
 
-You've now created a simple hotel reservation system in Salesforce Classic without using Visualforce Pages or Apex classes. This system allows you to:
+- Try creating a few rooms (e.g., Single, Double).
+- Add customers.
+- Create reservation records by linking rooms and customers with check-in/out dates.
+- Use **Reports** or **List Views** to analyze data.
 
-- Manage hotel rooms and their availability
-- Track customer information
-- Create and manage reservations
-- Generate reports on occupancy and revenue
+---
 
-This system can be further enhanced with automation using Process Builder or Flow to automatically update room status when reservations are created or completed.
+Happy Building! ☁️
