@@ -1,0 +1,35 @@
+public class calculator {
+    public Integer xvalue {get;set;}
+    public Integer yvalue {get;set;}
+    public Integer result {get;set;}
+    public String operation {get;set;}
+    
+    public PageReference sub(){
+        result = xvalue - yvalue;
+        operation = 'Subtraction';
+        return null;
+    }
+
+    public PageReference add(){
+        result = xvalue + yvalue;
+        operation = 'Addition';
+        return null;
+    }
+
+    public PageReference mul(){
+        result = xvalue * yvalue;
+        operation = 'Multiplication';
+        return null;
+    }
+
+    public PageReference div(){
+        if(yvalue != 0){
+            result = xvalue / yvalue;
+            operation = 'Division';
+        } else {
+            result = null;
+            operation = 'Division by zero error';
+        }
+        return null;
+    }
+}
