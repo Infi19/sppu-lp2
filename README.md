@@ -146,4 +146,127 @@ A step-by-step guide for creating and managing Amazon EC2 instances in AWS. The 
 - Connecting to and managing instances
 - Important security and cost management considerations
 
-**To access**: Open the file at `cc/creating_ec2_instance.md` 
+**To access**: Open the file at `cc/creating_ec2_instance.md`
+
+## 8-Puzzle A* Solution Walkthrough
+
+This section provides a detailed step-by-step solution of the 8-puzzle problem using the A* algorithm with Manhattan Distance heuristic.
+
+### Problem Setup
+
+**Initial State (S):**
+```
+1 2 3
+4 0 6
+7 5 8
+```
+
+**Goal State (G):**
+```
+1 2 3
+4 5 6
+7 8 0
+```
+
+### Step-by-Step Solution
+
+#### Step 1: Initial Node Evaluation
+- **State S:**
+  ```
+  1 2 3
+  4 0 6
+  7 5 8
+  ```
+- g = 0 (no moves yet)
+- h = 2 (Manhattan Distance: 5 and 8 are misplaced)
+- f = g + h = 0 + 2 = 2
+
+#### Step 2: Possible Moves from Initial State
+Blank (0) at position (1,1) can move:
+- Up: Swap with 2 → State A
+- Down: Swap with 5 → State B
+- Left: Swap with 4 → State C
+- Right: Swap with 6 → State D
+
+#### Step 3: Child States Evaluation
+
+**State A:**
+```
+1 0 3
+4 2 6
+7 5 8
+```
+- g = 1
+- h = 3
+- f = 4
+
+**State B:**
+```
+1 2 3
+4 5 6
+7 0 8
+```
+- g = 1
+- h = 1
+- f = 2
+
+**State C:**
+```
+1 2 3
+0 4 6
+7 5 8
+```
+- g = 1
+- h = 3
+- f = 4
+
+**State D:**
+```
+1 2 3
+4 6 0
+7 5 8
+```
+- g = 1
+- h = 3
+- f = 4
+
+#### Step 4: Node Selection
+- State B has lowest f-value (2)
+- Selected for expansion
+
+#### Step 5: Goal Check and Final Moves
+- State B is not goal state
+- Possible moves from B:
+  - Up: Back to S (visited)
+  - Left: Swap with 7 → State E
+  - Right: Swap with 8 → Goal State
+
+#### Step 6: Solution Path
+Final path found in 2 moves:
+1. Start → Move down (0 ↔ 5)
+2. Move right (0 ↔ 8)
+
+### Final Solution Path
+
+1. Initial State:
+```
+1 2 3
+4 0 6
+7 5 8
+```
+
+2. After first move (down):
+```
+1 2 3
+4 5 6
+7 0 8
+```
+
+3. Final State (goal):
+```
+1 2 3
+4 5 6
+7 8 0
+```
+
+This solution demonstrates how A* algorithm efficiently finds the optimal path using Manhattan Distance heuristic, reaching the goal in just 2 moves. 
